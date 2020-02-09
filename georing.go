@@ -51,6 +51,21 @@ func (g *GeoNode) Print() {
 			break
 		}
 	}
+
+	// fmt.Println("Backwards:")
+	// cur = first.Previous
+	// last := cur
+
+	// i := 0
+	// for {
+	// 	fmt.Println(cur.Coordinates)
+	// 	cur = cur.Previous
+	// 	if cur == last || i > 5 {
+	// 		break
+	// 	}
+
+	// 	i++
+	// }
 }
 
 // CloneNode returns a copy of GeoNode with Next and Previous set to nil
@@ -105,6 +120,11 @@ func (g *GeoNode) CloneRing() *GeoNode {
 	for {
 		copiedCur := &GeoNode{}
 		*copiedCur = *cur
+
+		// break all links from node
+		copiedCur.Next = nil
+		copiedCur.Previous = nil
+
 		clonedCur = clonedCur.InsertAfter(copiedCur)
 		cur = cur.Next
 
@@ -116,7 +136,34 @@ func (g *GeoNode) CloneRing() *GeoNode {
 	return clonedGeoNode
 }
 
-// InsertBefore inserts a node before this GeoNode
+// FindTerminiOfSegment returns the beginning and end of a segment
+func (g *GeoNode) FindTerminiOfSegment() (*GeoNode, *GeoNode) {
+	// lets find termini of `a`
+	var beginning *GeoNode // beginning temrinus
+	var end *GeoNode       // end terminus
+
+	beginning = g
+	for {
+		if beginning == nil || beginning.Previous == nil {
+			break
+		}
+
+		beginning = beginning.Previous
+	}
+
+	end = g
+	for {
+		if end == nil || end.Next == nil {
+			break
+		}
+
+		end = end.Next
+	}
+
+	return beginning, end
+}
+
+// InsertBefore inserts a node or segment before this GeoNode
 func (g *GeoNode) InsertBefore(a *GeoNode) *GeoNode {
 	if g.Previous == nil {
 		g.Previous = g
@@ -126,17 +173,18 @@ func (g *GeoNode) InsertBefore(a *GeoNode) *GeoNode {
 		g.Next = g
 	}
 
-	a.Previous = g.Previous
-	a.Next = g
+	beginning, end := a.FindTerminiOfSegment()
 
-	g.Previous.Next = a
-	g.Previous = a
-	a.Next = g
+	beginning.Previous = g.Previous
+
+	g.Previous.Next = beginning
+	g.Previous = end
+	end.Next = g
 
 	return a
 }
 
-// InsertAfter inserts a node after this GeoNode
+// InsertAfter inserts a node or segment after this GeoNode
 func (g *GeoNode) InsertAfter(a *GeoNode) *GeoNode {
 	if g.Previous == nil {
 		g.Previous = g
@@ -146,34 +194,14 @@ func (g *GeoNode) InsertAfter(a *GeoNode) *GeoNode {
 		g.Next = g
 	}
 
-	// lets find termini of `a`
-	var beginning *GeoNode // beginning temrinus
-	var end *GeoNode       // end terminus
-
-	beginning = a
-	for {
-		if beginning == nil || beginning.Next == nil {
-			break
-		}
-
-		beginning = beginning.Next
-	}
-
-	end = a
-	for {
-		if end == nil || end.Previous == nil {
-			break
-		}
-
-		end = end.Previous
-	}
+	beginning, end := a.FindTerminiOfSegment()
 
 	beginning.Previous = g
 	end.Next = g.Next
 
 	g.Next.Previous = end
-	g.Next = end
-	a.Previous = g
+	g.Next = beginning
+	beginning.Previous = g
 
 	return a
 }
