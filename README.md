@@ -1,2 +1,2 @@
 # gocwok (WIP)
-Eventually this will create crosswalks of to shape files
+Eventually this will create crosswalks of two shape files
