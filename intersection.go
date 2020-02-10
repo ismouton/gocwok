@@ -4,8 +4,8 @@ import "math"
 
 // FindIntersection finds the point of intersection of two line segemnts
 func FindIntersection(
-	lineSegment0 [2]Point,
-	lineSegment1 [2]Point,
+	lineSegment0 [2]*Point,
+	lineSegment1 [2]*Point,
 ) *Point {
 	// line segment 0
 	Ax := lineSegment0[0].X
@@ -83,6 +83,39 @@ func FindIntersection(
 
 // isPointContainedByShape determines if a point is fully enclosed by `testShape`
 func isPointContainedByShape(testShape *GeoNode, point *Point) bool {
+	const MaxFloat = 1.7976931348623158E+308
+	ray := [2]*Point{}
+	ray[0] = point
+	ray[1] = &Point{
+		X: point.X,
+		Y: MaxFloat,
+	}
+
+	intersectionCount := 0
+
+	first := testShape
+	cur := first
+
+	for {
+		currentLinesegment := [2]*Point{
+			cur.Coordinates,
+			cur.Next.Coordinates,
+		}
+
+		if FindIntersection(ray, currentLinesegment) != nil {
+			intersectionCount++
+		}
+
+		cur = cur.Next
+		if cur == first {
+			break
+		}
+	}
+
+	// even number of intersections means outside shape
+	if intersectionCount%2 == 0 {
+		return false
+	}
 
 	return true
 }

@@ -29,13 +29,13 @@ func main() {
 	// node0.Print()
 
 	intersection := FindIntersection(
-		[2]Point{
-			Point{0, 0},
-			Point{1, 1},
+		[2]*Point{
+			&Point{0, 0},
+			&Point{1, 1},
 		},
-		[2]Point{
-			Point{1, 0},
-			Point{0, 1},
+		[2]*Point{
+			&Point{1, 0},
+			&Point{0, 1},
 		},
 	)
 
