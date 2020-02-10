@@ -81,8 +81,8 @@ func FindIntersection(
 	}
 }
 
-// isPointContainedByShape determines if a point is fully enclosed by `testShape`
-func isPointContainedByShape(testShape *GeoNode, point *Point) bool {
+// IsPointContainedByShape determines if a point is fully enclosed by `testShape`
+func IsPointContainedByShape(testShape *GeoNode, point *Point) bool {
 	const MaxFloat = 1.7976931348623158E+308
 	ray := [2]*Point{}
 	ray[0] = point
