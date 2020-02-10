@@ -2,8 +2,6 @@ package main
 
 import "math"
 
-import "fmt"
-
 // FindIntersection finds the point of intersection of two line segemnts
 func FindIntersection(
 	lineSegment0 [2]Point,
@@ -27,46 +25,14 @@ func FindIntersection(
 	var newX float64
 	var ABpos float64
 
-	//  Fail if both lines are undefined.
-	if Ax == Bx && Ay == By && Cx == Dx && Cy == Dy {
-		fmt.Println("One line is undefined")
+	//  Fail if either line segment is zero-length.
+	if Ax == Bx && Ay == By || Cx == Dx && Cy == Dy {
 		return nil
 	}
 
-	// if either line is undefined then we have to use a different method
-	// TODO write this case
-	if Ax == Bx && Ay == By || Cx == Dx && Cy == Dy {
-		// undefined line segment
-		var uLineSegment *Point
-
-		// defined line segment
-		var dLineSegment *Point
-
-		if Ax == Bx && Ay == By {
-			uLineSegment = []*Point{
-				&Point{X: Ax, Y: Ay},
-				&Point{X: Bx, Y: By},
-			}
-
-			dLineSegment = []*Point{
-				&Point{X: Cx, Y: Cy},
-				&Point{X: Dx, Y: Dy},
-			}
-		} else { 
-			uLineSegment = []*Point{
-				&Point{X: Cx, Y: Cy},
-				&Point{X: Dx, Y: Dy},
-			}
-
-			dLineSegment = []*Point{
-				&Point{X: Ax, Y: Ay},
-				&Point{X: Bx, Y: By},
-			}
-		}
-
-		// determine if two line segments intersect
-		if 
-
+	//  Fail if the segments share an end-point.
+	if Ax == Cx && Ay == Cy || Bx == Cx && By == Cy ||
+		Ax == Dx && Ay == Dy || Bx == Dx && By == Dy {
 		return nil
 	}
 
@@ -91,13 +57,18 @@ func FindIntersection(
 	Dy = Dy*theCos - Dx*theSin
 	Dx = newX
 
-	//  Fail if the lines are parallel.
-	if Cy == Dy {
+	//  Fail if segment C-D doesn't cross line A-B.
+	if Cy < 0. && Dy < 0. || Cy >= 0. && Dy >= 0. {
 		return nil
 	}
 
 	//  (3) Discover the position of the intersection point along line A-B.
 	ABpos = Dx + (Cx-Dx)*Dy/(Dy-Cy)
+
+	//  Fail if segment C-D crosses line A-B outside of segment A-B.
+	if ABpos < 0. || ABpos > distAB {
+		return nil
+	}
 
 	//  (4) Apply the discovered position to line A-B in the original coordinate system.
 	X := Ax + ABpos*theCos
@@ -105,8 +76,8 @@ func FindIntersection(
 
 	//  Success.
 	return &Point{
-		X,
-		Y,
+		X: X,
+		Y: Y,
 	}
 }
 

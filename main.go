@@ -28,23 +28,19 @@ func main() {
 	// fmt.Println("Node 0:")
 	// node0.Print()
 
-	intersection := findIntersection(
+	intersection := FindIntersection(
 		[2]Point{
+			Point{0, 0},
 			Point{1, 1},
-			Point{2, 2},
 		},
 		[2]Point{
-			Point{1, 2},
-			Point{2, 1},
+			Point{1, 0},
+			Point{0, 1},
 		},
 	)
 
-	fmt.Printf("Intersection: %f, %f", intersection.X, intersection.Y)
-}
+	if intersection != nil {
+		fmt.Printf("Intersection: %f, %f", intersection.X, intersection.Y)
+	}
 
-/*
- *
- *
- *
- *
- */
+}
