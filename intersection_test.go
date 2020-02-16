@@ -93,4 +93,17 @@ func TestIntersection(t *testing.T) {
 			&Point{6, 3},
 		},
 	)
+
+	// test where line intersects but segment does not
+	oracleTest(
+		nil,
+		[2]*Point{
+			&Point{0, 0},
+			&Point{5, 5},
+		},
+		[2]*Point{
+			&Point{0, 30},
+			&Point{30, 0},
+		},
+	)
 }
