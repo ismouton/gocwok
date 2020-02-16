@@ -15,10 +15,14 @@ type GeoNode struct {
 	Coordinates *Point
 }
 
+// Bounds represents the SW and NE bounds of a shape
+type Bounds []Point
+
 // Feature represents a complete set of GeoShapes that represent a feature (ie County)
 type Feature struct {
 	GeoShapeCount int64
 	GeoShapes     []*GeoNode
+	Bounds        Bounds
 }
 
 // Len returns the number of elements in the ring. Runs in O(n) time
@@ -51,21 +55,6 @@ func (g *GeoNode) Print() {
 			break
 		}
 	}
-
-	// fmt.Println("Backwards:")
-	// cur = first.Previous
-	// last := cur
-
-	// i := 0
-	// for {
-	// 	fmt.Println(cur.Coordinates)
-	// 	cur = cur.Previous
-	// 	if cur == last || i > 5 {
-	// 		break
-	// 	}
-
-	// 	i++
-	// }
 }
 
 // CloneNode returns a copy of GeoNode with Next and Previous set to nil
