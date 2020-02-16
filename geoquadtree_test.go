@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestGeoQuadTree(t *testing.T) {
+func TestGeoQuadTreeBounds(t *testing.T) {
 	oracleTest := func (
 		oracle bool,
 		bounds0 Bounds,
