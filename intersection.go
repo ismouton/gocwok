@@ -4,20 +4,20 @@ import "math"
 
 // FindIntersection finds the point of intersection of two line segemnts
 func FindIntersection(
-	lineSegment0 [2]*Point,
-	lineSegment1 [2]*Point,
+	l0 LineSegment,
+	l1 LineSegment,
 ) *Point {
 	// line segment 0
-	Ax := lineSegment0[0].X
-	Ay := lineSegment0[0].Y
-	Bx := lineSegment0[1].X
-	By := lineSegment0[1].Y
+	Ax := l0[0].X
+	Ay := l0[0].Y
+	Bx := l0[1].X
+	By := l0[1].Y
 
 	// line segment 1
-	Cx := lineSegment1[0].X
-	Cy := lineSegment1[0].Y
-	Dx := lineSegment1[1].X
-	Dy := lineSegment1[1].Y
+	Cx := l1[0].X
+	Cy := l1[0].Y
+	Dx := l1[1].X
+	Dy := l1[1].Y
 
 	var distAB float64
 	var theCos float64

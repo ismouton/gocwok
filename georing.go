@@ -8,6 +8,10 @@ type Point struct {
 	Y float64
 }
 
+func (p *Point) String() string {
+	return fmt.Sprintf("X:%f, Y:%f", p.X, p.Y)
+}
+
 // GeoNode repersents a single point in a GeoShape
 type GeoNode struct {
 	Previous    *GeoNode
@@ -16,7 +20,8 @@ type GeoNode struct {
 }
 
 // Bounds represents the SW and NE bounds of a shape
-type Bounds []Point
+type Bounds [2]*Point
+type LineSegment [2]*Point
 
 // Feature represents a complete set of GeoShapes that represent a feature (ie County)
 type Feature struct {

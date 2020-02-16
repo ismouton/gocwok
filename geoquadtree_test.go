@@ -7,11 +7,11 @@ import (
 func TestGeoQuadTreeBounds(t *testing.T) {
 	oracleTest := func (
 		oracle bool,
-		bounds0 Bounds,
-		bounds1 Bounds,
+		c0 Bounds,
+		c1 Bounds,
 	) {
-		q := &GeoQuadTreeNode{Bounds: bounds0}
-		f := &Feature{Bounds: bounds1}
+		q := &GeoQuadTreeNode{Bounds: c0}
+		f := &Feature{Bounds: c1}
 		fits := q.CheckBounds(f)
 
 		if fits != oracle {
@@ -21,61 +21,61 @@ func TestGeoQuadTreeBounds(t *testing.T) {
 
 	oracleTest(
 		true,
-		[]Point{
-			Point{0,0},
-			Point{1,1},
+		[2]*Point{
+			&Point{0,0},
+			&Point{1,1},
 		},
-		[]Point{
-			Point{0.1,0.1},
-			Point{0.9,0.9},
-		},
-	)
-
-	oracleTest(
-		false,
-		[]Point{
-			Point{0,0},
-			Point{1,1},
-		},
-		[]Point{
-			Point{-0.1,0.1},
-			Point{0.9,0.9},
+		[2]*Point{
+			&Point{0.1,0.1},
+			&Point{0.9,0.9},
 		},
 	)
 
 	oracleTest(
 		false,
-		[]Point{
-			Point{0,0},
-			Point{1,1},
+		[2]*Point{
+			&Point{0,0},
+			&Point{1,1},
 		},
-		[]Point{
-			Point{0.1,-0.1},
-			Point{0.9,0.9},
-		},
-	)
-
-	oracleTest(
-		false,
-		[]Point{
-			Point{0,0},
-			Point{1,1},
-		},
-		[]Point{
-			Point{0.1,0.1},
-			Point{-0.9,0.9},
+		[2]*Point{
+			&Point{-0.1,0.1},
+			&Point{0.9,0.9},
 		},
 	)
 
 	oracleTest(
 		false,
-		[]Point{
-			Point{0,0},
-			Point{1,1},
+		[2]*Point{
+			&Point{0,0},
+			&Point{1,1},
 		},
-		[]Point{
-			Point{0.1,0.1},
-			Point{0.9,-0.9},
+		[2]*Point{
+			&Point{0.1,-0.1},
+			&Point{0.9,0.9},
+		},
+	)
+
+	oracleTest(
+		false,
+		[2]*Point{
+			&Point{0,0},
+			&Point{1,1},
+		},
+		[2]*Point{
+			&Point{0.1,0.1},
+			&Point{-0.9,0.9},
+		},
+	)
+
+	oracleTest(
+		false,
+		[2]*Point{
+			&Point{0,0},
+			&Point{1,1},
+		},
+		[2]*Point{
+			&Point{0.1,0.1},
+			&Point{0.9,-0.9},
 		},
 	)
 }
