@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestIntersection(t *testing.T) {
+func TestFindIntersection(t *testing.T) {
 	oracleTest := func(
 		oracle *Point,
 		c0 LineSegment,
@@ -106,4 +106,45 @@ func TestIntersection(t *testing.T) {
 			&Point{30, 0},
 		},
 	)
+
+	// test case with 0 length line
+	oracleTest(
+		nil,
+		[2]*Point{
+			&Point{0, 0},
+			&Point{5, 5},
+		},
+		[2]*Point{
+			&Point{1, 1},
+			&Point{1, 1},
+		},
+	)
+}
+
+func TestIsPointContainedByShape(t *testing.T) {
+	oracleTest := func(
+		oracle bool,
+		g *GeoNode,
+		p *Point,
+	) {
+		result := IsPointContainedByShape(g, p)
+		if result != oracle {
+			t.Errorf("Expected %t; Got %t;\n", oracle, result)
+		}
+	}
+
+	node0 := &GeoNode{Coordinates: &Point{0, 0}}
+	node1 := &GeoNode{Coordinates: &Point{3, 0}}
+	node2 := &GeoNode{Coordinates: &Point{3, 3}}
+	node3 := &GeoNode{Coordinates: &Point{0, 3}}
+	node0.InsertAfter(node1).InsertAfter(node2).InsertAfter(node3)
+
+	// test case for point in shape
+	oracleTest(true, node0, &Point{1.5, 1.5})
+
+	// test case for point NOT in shape
+	oracleTest(false, node0, &Point{5, 5})
+
+	// shared vertex should not count as in shape
+	oracleTest(false, node0, &Point{3, 3})
 }
