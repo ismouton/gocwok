@@ -1,8 +1,40 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/jonas-p/go-shp"
+)
 
 func main() {
+	states := "shp/states.zip"
+	shape, err := shp.OpenZip(states)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for shape.Next() {
+		fields := extractFields(shape)
+		bounds := extractBBox(shape)
+		shapes := extractShapes(shape)
+		l := len(shapes)
+		fmt.Printf("Found %d shapes in %s!\n", l, fields["name"])
+
+		feature := &Feature{
+			GeoShapeCount: int64(l),
+			GeoShapes:     shapes,
+			Bounds:        bounds,
+			Properties:    fields,
+		}
+
+		if feature == nil {
+
+		}
+	}
+
+	return
+
 	node0 := &GeoNode{Coordinates: &Point{0, 0}}
 	node1 := &GeoNode{Coordinates: &Point{1, 1}}
 	node2 := &GeoNode{Coordinates: &Point{2, 2}}
@@ -25,8 +57,8 @@ func main() {
 	ringClone.InsertBefore(node3.CloneRing().BreakRingBefore())
 	ringClone.Print()
 
-	// fmt.Println("Node 0:")
-	// node0.Print()
+	fmt.Println("Node 0:")
+	node0.Print()
 
 	intersection := FindIntersection(
 		[2]*Point{

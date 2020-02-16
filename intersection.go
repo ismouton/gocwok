@@ -85,8 +85,7 @@ func FindIntersection(
 
 // IsPointContainedByShape determines if point is fully enclosed by testShape
 func IsPointContainedByShape(testShape *GeoNode, point *Point) bool {
-	// TODO determine a better value for max
-	const max = 99999
+	max := math.Pow(2, 32)
 	ray := [2]*Point{}
 	ray[0] = point
 	ray[1] = &Point{
