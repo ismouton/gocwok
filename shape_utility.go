@@ -1,25 +1,10 @@
 package main
 
 import (
-	"strings"
-
 	"github.com/jonas-p/go-shp"
 )
 
-func extractFields(shape *shp.ZipReader) map[string]string {
-	fields := shape.Fields()
-
-	tempFieldsStruct := make(map[string]string)
-	for k, f := range fields {
-		val := shape.Attribute(k)
-		tempFieldsStruct[strings.ToLower(f.String())] = val
-	}
-
-	return tempFieldsStruct
-}
-
-func extractBBox(shape *shp.ZipReader) Bounds {
-	_, p := shape.Shape()
+func extractBBox(p shp.Shape) Bounds {
 	polygon := p.(*shp.Polygon)
 
 	bbox := polygon.BBox()
@@ -38,9 +23,8 @@ func extractBBox(shape *shp.ZipReader) Bounds {
 	return bounds
 }
 
-func extractShapes(shape *shp.ZipReader) []*GeoNode {
+func extractShapes(p shp.Shape) []*GeoNode {
 	geoShapes := make([]*GeoNode, 0)
-	_, p := shape.Shape()
 	polygon := p.(*shp.Polygon)
 
 	shapeCount := 0
