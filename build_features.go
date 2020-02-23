@@ -8,7 +8,7 @@ import (
 )
 
 // BuildFeatures indexes a shape file into provided data structure
-func BuildFeatures(filename *string) ([]*Feature, error) {
+func BuildFeatures(filename *string) (*FeatureCollection, error) {
 	features := make([]*Feature, 0)
 	shape, err := shp.OpenZip(*filename)
 	featureChan := make(chan *Feature)
@@ -41,7 +41,7 @@ func BuildFeatures(filename *string) ([]*Feature, error) {
 
 			bounds := extractBBox(cur)
 			shapes := extractShapes(cur)
-			centroid, area, err := FindCentroid(shapes)
+			// centroid, area, err := FindCentroid(shapes)
 
 			l := len(shapes)
 
@@ -60,5 +60,5 @@ func BuildFeatures(filename *string) ([]*Feature, error) {
 	close(featureChan)
 
 	<-done
-	return features, nil
+	return &FeatureCollection{Features: features}, nil
 }

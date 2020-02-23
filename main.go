@@ -39,10 +39,9 @@ func main() {
 		os.Exit(ErrInvalidInputFile)
 	}
 
-	var withShapes []*Feature
+	var withShapes *FeatureCollection
 	if *withFilePath != "" {
 		var err error
-		withShapes = make([]*Feature, 0)
 
 		if !fileExists(withFilePath) {
 			fmt.Fprintf(os.Stderr, "With file does not exist. Check your path.!\n")
@@ -74,8 +73,8 @@ func main() {
 		panic("Error opening input file")
 	}
 
-	l0 := len(inputShapes)
-	l1 := len(withShapes)
+	l0 := len(inputShapes.Features)
+	l1 := len(withShapes.Features)
 
 	fmt.Printf("Found %d features in input file & %d in with file!\n", l0, l1)
 

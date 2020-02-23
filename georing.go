@@ -9,14 +9,6 @@ type GeoNode struct {
 	Coordinates *Point
 }
 
-// Feature represents a complete set of GeoShapes that represent a feature (ie County)
-type Feature struct {
-	GeoShapeCount int64
-	GeoShapes     []*GeoNode
-	Bounds        Bounds
-	Properties    map[string]string
-}
-
 // Len returns the number of elements in the ring. Runs in O(n) time
 func (g *GeoNode) Len() int {
 	cur := g
@@ -83,8 +75,8 @@ func (g *GeoNode) BreakRingBefore() *GeoNode {
 	return afterBreak
 }
 
-// CloneRing returns a copy of GeoNode
-func (g *GeoNode) CloneRing() *GeoNode {
+// Clone returns a copy of GeoNode
+func (g *GeoNode) Clone() *GeoNode {
 	clonedGeoNode := &GeoNode{}
 	cur := &GeoNode{}
 
