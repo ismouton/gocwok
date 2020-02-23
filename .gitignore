@@ -3,3 +3,6 @@ gocwok
 coverage.out
 .DS_Store
 shp
+*.dbf
+*.shp
+*.shx
