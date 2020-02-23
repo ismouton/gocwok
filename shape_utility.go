@@ -40,8 +40,6 @@ func extractShapes(p shp.Shape) []*GeoNode {
 			shapeCount++
 			first = nil
 			geoShapes = append(geoShapes, currentGeoNode)
-
-			FindArea(currentGeoNode)
 			continue
 		}
 
@@ -68,6 +66,9 @@ func FindAreaOfTriad(t Triad) float64 {
 
 // FindArea returns the area of a geonode
 func FindArea(g *GeoNode) (float64, error) {
+	// radius of earth in meters
+	const r = 6378137
+
 	convertToRadians := func(input float64) float64 {
 		return input * math.Pi / 180
 	}
@@ -94,7 +95,7 @@ func FindArea(g *GeoNode) (float64, error) {
 		return 0, errors.New("shape has less than 3 points")
 	}
 
-	area *= 6378137 * 6378137 / 2
+	area *= r * r / 2
 
 	return math.Abs(area), nil
 }
@@ -123,4 +124,36 @@ func FindDistance(p1 *Point, p2 *Point) float64 {
 	dist = dist * 60 * 1.1515
 
 	return dist
+}
+
+// FindCentroid finds the centroid
+func FindCentroid(g *GeoNode) (*Point, error) {
+	// TODO Write this
+	return &Point{0, 0}, nil
+}
+
+// FindCentroidAndAreaOfSet finds the centroid of shape with most area in a set of shapes
+func FindCentroidAndAreaOfSet(s []*GeoNode) (float64, *Point, error) {
+	maxArea := 0.
+	var maxShape *GeoNode
+	for _, shape := range s {
+		area, err := FindArea(shape)
+
+		if err != nil {
+			return 0, nil, err
+		}
+
+		if area > maxArea {
+			maxShape = shape
+			maxArea = area
+		}
+	}
+
+	centroid, err := FindCentroid(maxShape)
+
+	if err != nil {
+		return 0, nil, err
+	}
+
+	return maxArea, centroid, nil
 }

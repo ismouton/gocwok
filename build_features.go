@@ -41,6 +41,8 @@ func BuildFeatures(filename *string) ([]*Feature, error) {
 
 			bounds := extractBBox(cur)
 			shapes := extractShapes(cur)
+			centroid, area, err := FindCentroid(shapes)
+
 			l := len(shapes)
 
 			feature := &Feature{
