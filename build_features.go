@@ -11,7 +11,7 @@ import (
 func BuildFeatures(filename *string) ([]*Feature, error) {
 	features := make([]*Feature, 0)
 	shape, err := shp.OpenZip(*filename)
-	featureChan := make(chan *Feature, 128)
+	featureChan := make(chan *Feature)
 	done := make(chan bool)
 	var wg sync.WaitGroup
 

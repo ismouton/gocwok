@@ -7,6 +7,9 @@ import (
 // Bounds represents the SW and NE bounds of a shape
 type Bounds [2]*Point
 
+// Triad represents 3 points
+type Triad [3]*Point
+
 // LineSegment represents a simple line segement
 type LineSegment [2]*Point
 
@@ -31,5 +34,5 @@ func (p *Point) IsEqual(c *Point) bool {
 		return false
 	}
 
-	return FloatEquality(p.X, c.X, .000001) && FloatEquality(p.Y, c.Y, .000001)
+	return FloatEquality(p.X, c.X, .0000001) && FloatEquality(p.Y, c.Y, .0000001)
 }
