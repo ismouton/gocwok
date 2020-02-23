@@ -1,4 +1,6 @@
 github.com/jonas-p/go-shp v0.1.1 h1:LY81nN67DBCz6VNFn2kS64CjmnDo9IP8rmSkTvhO9jE=
 github.com/jonas-p/go-shp v0.1.1/go.mod h1:MRIhyxDQ6VVp0oYeD7yPGr5RSTNScUFKCDsI5DR7PtI=
+github.com/jonas-p/go-shp v0.1.2-0.20190401125246-9fd306ae10a6 h1:h5O7ee4tlSPVjdC75eSLX7jXZiHftthuHio/GtrhaSM=
+github.com/jonas-p/go-shp v0.1.2-0.20190401125246-9fd306ae10a6/go.mod h1:MRIhyxDQ6VVp0oYeD7yPGr5RSTNScUFKCDsI5DR7PtI=
 golang.org/dl v0.0.0-20200205193131-62c734104014 h1:pwnFW9Y84Sd0+a6SIiydpSrtvjT0Nhwss3AZOIF8ozQ=
 golang.org/dl v0.0.0-20200205193131-62c734104014/go.mod h1:IUMfjQLJQd4UTqG1Z90tenwKoCX93Gn3MAQJMOSBsDQ=

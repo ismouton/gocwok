@@ -1,6 +1,10 @@
 package main
 
-import "github.com/jonas-p/go-shp"
+import (
+	"fmt"
+
+	"github.com/jonas-p/go-shp"
+)
 
 // Feature represents a complete set of GeoShapes that represent a feature (ie County)
 type Feature struct {
@@ -45,9 +49,10 @@ func (f *FeatureCollection) Clone() *FeatureCollection {
 }
 
 // SaveToShapeFile saves FeatureCollection to specified filename
-func (f *FeatureCollection) SaveToShapeFile(filename string) error {
+func (f *FeatureCollection) SaveToShapeFile(filename *string) error {
+	fmt.Printf("Writing file %s\n", *filename)
 	// create and open a shapefile for writing points
-	shape, err := shp.Create(filename, shp.POLYGON)
+	shape, err := shp.Create(*filename, shp.POLYGON)
 	if err != nil {
 		return err
 	}

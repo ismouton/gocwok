@@ -73,6 +73,9 @@ func main() {
 		panic("Error opening input file")
 	}
 
+	outputShapes := inputShapes.Clone()
+	outputShapes.SaveToShapeFile(outputFilePath)
+
 	l0 := len(inputShapes.Features)
 	l1 := len(withShapes.Features)
 
