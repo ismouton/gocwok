@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"testing"
 )
 
@@ -10,6 +11,16 @@ func TestFindIntersection(t *testing.T) {
 		c0 LineSegment,
 		c1 LineSegment,
 	) {
+		floatEquality := func(
+			f0 float64,
+			f1 float64,
+			threshold float64,
+		) bool {
+			delta := math.Abs(f0 - f1)
+
+			return delta < threshold
+		}
+
 		result := FindIntersection(c0, c1)
 
 		// test for nils
@@ -24,7 +35,7 @@ func TestFindIntersection(t *testing.T) {
 		}
 
 		theshold := 0.000001
-		if !FloatEquality(result.X, oracle.X, theshold) || !FloatEquality(result.Y, oracle.Y, theshold) {
+		if !floatEquality(result.X, oracle.X, theshold) || !floatEquality(result.Y, oracle.Y, theshold) {
 			t.Errorf("Got: %s; Expected: %s;\n", result, oracle)
 		}
 	}

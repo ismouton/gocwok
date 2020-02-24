@@ -58,5 +58,44 @@ func (f *FeatureCollection) SaveToShapeFile(filename *string) error {
 	}
 	defer shape.Close()
 
+	for i0, feature := range f.Features {
+		polyline := shp.Polygon{
+			Points:   make([]shp.Point, 0),
+			Parts:    []int32{0},
+			NumParts: 1,
+		}
+		polyline.Parts = []int32{0}
+
+		for partNumber, g := range feature.GeoShapes {
+			cur := g
+			first := g
+			for {
+				cur = cur.Next
+				if *cur == *first {
+					if partNumber < len(feature.GeoShapes)-1 {
+						polyline.NumParts++
+						polyline.Parts = append(polyline.Parts, int32(polyline.NumPoints))
+					}
+
+					break
+				} else {
+					polyline.NumPoints++
+					polyline.Points = append(polyline.Points, shp.Point{X: cur.Previous.Coordinates.X, Y: cur.Previous.Coordinates.Y})
+				}
+			}
+		}
+
+		// fields to write
+		fields := []shp.Field{
+			// String attribute field with length 25
+			shp.StringField("NAME", 25),
+		}
+
+		// setup fields for attributes
+		shape.SetFields(fields)
+		shape.Write(&polyline)
+		shape.WriteAttribute(i0, 0, feature.Properties["name"])
+	}
+
 	return nil
 }

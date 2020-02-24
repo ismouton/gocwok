@@ -33,12 +33,16 @@ func extractShapes(p shp.Shape) []*GeoNode {
 	shapeCount := 0
 	var first *Point
 	var currentGeoNode *GeoNode
-	for _, s := range polygon.Points {
+	for i, s := range polygon.Points {
 		current := &Point{s.X, s.Y}
 
-		if current.IsEqual(first) {
+		isLastIndex := i == int(polygon.NumPoints-1)
+		isNextPart := (len(polygon.Parts)-1 > shapeCount && i == int(polygon.Parts[shapeCount+1])-1)
+		isTerminus := isLastIndex || isNextPart
+		if isTerminus {
 			shapeCount++
 			first = nil
+			currentGeoNode = currentGeoNode.InsertAfter(&GeoNode{Coordinates: current})
 			geoShapes = append(geoShapes, currentGeoNode)
 			continue
 		}

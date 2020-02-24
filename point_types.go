@@ -23,16 +23,3 @@ type Point struct {
 func (p *Point) String() string {
 	return fmt.Sprintf("X:%f, Y:%f", p.X, p.Y)
 }
-
-// IsEqual determines if two points are equal
-func (p *Point) IsEqual(c *Point) bool {
-	if c == nil && p == nil {
-		return true
-	}
-
-	if c == nil || p == nil {
-		return false
-	}
-
-	return FloatEquality(p.X, c.X, .0000001) && FloatEquality(p.Y, c.Y, .0000001)
-}

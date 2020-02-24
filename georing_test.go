@@ -33,7 +33,7 @@ func TestGeoRing(t *testing.T) {
 	node3 := &GeoNode{Coordinates: &Point{3, 3}}
 
 	node0.InsertAfter(node1).InsertAfter(node2).InsertAfter(node3)
-	ringClone := node0.CloneRing()
+	ringClone := node0.Clone()
 
 	l := node0.Len()
 	if l != 4 {
