@@ -21,12 +21,18 @@ func main() {
 	outputFilePath := flag.String("o", "", "Your output file")
 	withFilePath := flag.String("w", "", "Used to find subboundaries in input file")
 	addCentroid := flag.Bool("c", false, "Calculates centroid and inserts into output file")
+	printAttributes := flag.Bool("a", false, "Print attributes contained in the shape database and exit")
 
 	flag.Parse()
 
 	if *inputFilePath == "" {
 		fmt.Fprintf(os.Stderr, "You must provide an input file!\n")
 		os.Exit(ErrNoInputFile)
+	}
+
+	if *printAttributes {
+		printInfo(inputFilePath)
+		os.Exit(0)
 	}
 
 	if *outputFilePath == "" {
