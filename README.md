@@ -1,2 +1,2 @@
 # go-shputility (WIP)
-General utilities for working with ESRI shapefile.
+General utilities for working with ESRI shapefiles.
