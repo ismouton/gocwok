@@ -1,2 +1,2 @@
-# gocwok (WIP)
-Eventually this will create crosswalks of two shape files
+# go-shputility (WIP)
+General utilities for working with ESRI shapefile.
