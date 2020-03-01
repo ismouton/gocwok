@@ -1,4 +1,4 @@
-module github.com/ismouton/gocwok
+module github.com/ismouton/go-shputility
 
 go 1.14
 
